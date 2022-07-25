@@ -12,8 +12,12 @@ if [[ ${ACCEPTED,,} =~ ^[y] ]]; then
     cd ~/autofan
     echo "Installing required packages..."
     apt install sshpass wget lm-sensors jq -y
-    echo -e "\e[92mDownloading ILO_250 for ROM upgrade\e[0m"
-    wget -q https://github.com/That-Guy-Jack/HP-ILO-Fan-Control/tree/main/Files/ilo_250
+    echo "Do you with to download the ILO ROM?"
+    read -rep "Please indicate (y/N): " ROMACCEPT
+    if [[ ${ROMACCEPT,,} =~ ^[y] ]]; then
+        echo -e "\e[92mDownloading ILO_250 for ROM upgrade\e[0m"
+        wget -q https://github.com/That-Guy-Jack/HP-ILO-Fan-Control/tree/main/Files/ilo_250
+    fi
     echo -e "\e[92m Creating autofan service\e[0m"
     wget -q https://raw.githubusercontent.com/That-Guy-Jack/HP-ILO-Fan-Control/main/Files/autofan.service
     mv autofan.service /etc/systemd/system/
